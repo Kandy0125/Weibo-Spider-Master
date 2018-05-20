@@ -1,0 +1,7 @@
+#!/usr/bin/env Python
+# -*-coding:utf-8-*-
+from WeiboSpider import Spider
+if __name__ == "__main__":
+    s = Spider('林彦俊', 100)
+    s.MainSpider()
+    s.ShowResult()
