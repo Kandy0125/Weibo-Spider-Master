@@ -7,11 +7,11 @@
   1.1 项目爬取网站：微博移动版https://weibo.cn/
   
   1.2 项目所用到的Python库
-      （1）selenium 
+       selenium 
             用于自动化模拟，模拟登陆，获取由JavaScript自动生成的网页源代码，这里用到的模拟浏览器是FireFox火狐浏览器，注意浏览器的配置。         
-      （2） urllib   
+       urllib   
             用了urllib.quote来编码关键字    
-      （3）time     
+       time     
             主要用time.sleep这个函数
             
 # 2. 各部分代码介绍
