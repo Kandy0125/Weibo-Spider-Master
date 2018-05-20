@@ -9,13 +9,13 @@
   1.2 项目所用到的Python库
   
        selenium 
-            用于自动化模拟，模拟登陆，获取由JavaScript自动生成的网页源代码，这里用到的模拟浏览器是FireFox火狐浏览器，注意浏览器的配置。 
+       用于自动化模拟，模拟登陆，获取由JavaScript自动生成的网页源代码，这里用到的模拟浏览器是FireFox火狐浏览器，注意浏览器的配置。 
             
        urllib   
-            用了urllib.quote来编码关键字 
+       用了urllib.quote来编码关键字 
             
        time     
-            主要用time.sleep这个函数
+       主要用time.sleep这个函数
             
 # 2. 各部分代码介绍
 
