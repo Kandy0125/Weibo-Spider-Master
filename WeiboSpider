@@ -1,0 +1,74 @@
+#!/usr/bin/env Python
+# -*-coding:utf-8-*-
+
+import urllib
+from selenium import webdriver
+from bs4 import BeautifulSoup
+import time
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+from  Weibo import WeiboConetnt
+class Spider( ):
+
+    def __init__(self, KeyWord, PageRange):
+        self.PageRange = PageRange
+        self.CodeWord = urllib.quote(KeyWord)
+        self.WeiboList = []
+        option = webdriver.FirefoxOptions()
+        self.driver = webdriver.Firefox(firefox_options=option)
+        # self.Login()
+
+    def MainSpider(self):
+        ' ' 'In Selenium Way' ' '
+        for i in range(self.PageRange):
+            url = "https://weibo.cn/search/mblog?hideSearchFrame=&keyword=%s&filter=hasori&page=%s" % (self.CodeWord, i)
+            self.driver.get(url)  # 打开网址
+            self.GetHtml(url)
+
+    def Login(self):
+        id = "*********************"
+        pw = "*********************"
+        elem = self.driver .find_element_by_xpath("//input[@id='loginName']")
+        elem.send_keys(id)
+        time.sleep(1)
+        elem = self.driver.find_element_by_xpath("//input[@id='loginPassword']")
+        elem.send_keys(pw)
+        time.sleep(1)
+        self.driver .find_element_by_id('loginAction').click()
+        time.sleep(10)
+
+    def GetHtml(self, url):
+        time.sleep(3)
+        html = self.driver.find_element_by_xpath("//*").get_attribute("outerHTML")
+        soup = BeautifulSoup(html, 'html.parser')
+        flag = 0
+        while(1):
+            try:
+                login = soup.find('input', id="loginName")
+                self.Login()
+                flag = 1
+            except:
+                break
+        if flag == 1:
+            self.driver.get(url)  # 打开网址
+            html = self.driver.find_element_by_xpath("//*").get_attribute("outerHTML")
+            soup = BeautifulSoup(html, 'html.parser')
+        for div in soup.find_all('div', class_="c"):
+            id = div.get('id')
+            if len(str(id)) == 4:
+                continue
+            aui = soup.find('div', class_="c", id=id).find('a', class_="nk")
+            aui = str(aui.text)
+            try:
+                con = div.find('span', class_="ctt")
+                con = str(con.text)
+            except:
+                con = ""
+            obj = WeiboConetnt(aui, con)
+            self.WeiboList .append(obj)
+
+    def ShowResult(self):
+        for obj in self.WeiboList :
+            print "author:"+obj.aui
+            print "content"+obj.content
